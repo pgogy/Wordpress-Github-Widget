@@ -76,7 +76,8 @@ class githubwordpress extends WP_Widget {
 					?></a> @ <a target="_blank" href="https://www.github.com">Github</a>
 				</li>
 				<li>
-					<a style="cursor:hand; cursor:pointer" onclick="javascript:if(document.getElementById('githublist').style.display!='block'){document.getElementById('githublist').style.display='block';}else{document.getElementById('githublist').style.display='none';};">Show repositories</a>
+					<a style="cursor:hand; cursor:pointer" onclick="javascript:if(document.getElementById('githublist').style.display!='block'){document.getElementById('githublist').style.display='block';document.getElementById('githubrepshow').innerHTML = 'Hide my repositories';}else{document.getElementById('githublist').style.display='none';document.getElementById('githubrepshow').innerHTML = 'Show my repositories'};">Show my repositories</a>
+          
 				</li>
 			</ul>
 			<ul id="githublist" style="text-align:left; display:none">
