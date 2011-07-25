@@ -56,30 +56,27 @@ class githubwordpress extends WP_Widget {
 		$xml = new SimpleXMLElement($data);
 	
 		?><h3 class="widget-title">GitHub</h3>
-			<ul style="text-align:center">
-				<li style="padding:0px; margin:0px;">
-					<img src="<?PHP
+			<div style="padding:0px; margin:0px;">
+			  <img src="<?PHP
 				
-						echo plugins_url('/octocat_small.png', __FILE__);
+				echo plugins_url('/octocat_small.png', __FILE__);
 					
-					?>" />
-				</il>
-				<li style="padding:0px; margin:0px;">
-					<a target="_blank" href="https://www.github.com/<?PHP
+			  ?>" />
+			</div>
 				
-						echo $user;
+			<a target="_blank" href="https://www.github.com/<?PHP
+				
+				echo $user;
 					
-					?>"><?PHP
+			?>"><?PHP
 				
-						echo $user;
+				echo $user;
 				
-					?></a> @ <a target="_blank" href="https://www.github.com">Github</a>
-				</li>
-				<li>
-					<a style="cursor:hand; cursor:pointer" onclick="javascript:if(document.getElementById('githublist').style.display!='block'){document.getElementById('githublist').style.display='block';document.getElementById('githubrepshow').innerHTML = 'Hide my repositories';}else{document.getElementById('githublist').style.display='none';document.getElementById('githubrepshow').innerHTML = 'Show my repositories'};">Show my repositories</a>
-          
-				</li>
-			</ul>
+			?></a> @ <a target="_blank" href="https://www.github.com">Github</a>
+				
+			<div style="padding-bottom: 20px;">	
+			<a style="cursor:hand; cursor:pointer" onclick="javascript:if(document.getElementById('githublist').style.display!='block'){document.getElementById('githublist').style.display='block';document.getElementById('githubrepshow').innerHTML = 'Hide my repositories';}else{document.getElementById('githublist').style.display='none';document.getElementById('githubrepshow').innerHTML = 'Show my repositories'};">Show my repositories</a>
+                        </div>
 			<ul id="githublist" style="text-align:left; display:none">
 			<?PHP	
 				
