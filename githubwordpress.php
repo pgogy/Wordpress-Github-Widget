@@ -3,7 +3,7 @@
 Plugin Name: Github Wordpress Widget
 Plugin URI: http://www.pgogy.com/code/githubwordpress
 Description: A widget for displaying github profiles
-Version: 0.9
+Version: 0.92
 Author: Pgogy
 Author URI: http://www.pgogy.com
 License: GPL2
@@ -57,11 +57,13 @@ class githubwordpress extends WP_Widget {
 	
 		?><h3 class="widget-title">GitHub</h3>
 			<div style="padding:0px; margin:0px;">
+			<!-- octocat picture block open -->
 			  <img src="<?PHP
 				
 				echo plugins_url('/octocat_small.png', __FILE__);
 					
 			  ?>" />
+			<!-- octocat picture block closes -->
 			</div>
 				
 			<a target="_blank" href="https://www.github.com/<?PHP
@@ -75,8 +77,10 @@ class githubwordpress extends WP_Widget {
 			?></a> @ <a target="_blank" href="https://www.github.com">Github</a>
 				
 			<div style="padding-bottom: 20px;">	
-			<a style="cursor:hand; cursor:pointer" onclick="javascript:if(document.getElementById('githublist').style.display!='block'){document.getElementById('githublist').style.display='block';document.getElementById('githubrepshow').innerHTML = 'Hide my repositories';}else{document.getElementById('githublist').style.display='none';document.getElementById('githubrepshow').innerHTML = 'Show my repositories'};">Show my repositories</a>
-                        </div>
+			<!-- expand block open -->
+				<a style="cursor:hand; cursor:pointer" onclick="javascript:if(document.getElementById('githublist').style.display!='block'){document.getElementById('githublist').style.display='block';document.getElementById('githubrepshow').innerHTML = 'Hide my repositories';}else{document.getElementById('githublist').style.display='none';document.getElementById('githubrepshow').innerHTML = 'Show my repositories'};">Show my repositories</a>
+            <!-- expand block closes -->
+			</div>
 			<ul id="githublist" style="text-align:left; display:none">
 			<?PHP	
 				
