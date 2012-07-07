@@ -3,7 +3,7 @@
 Plugin Name: Github Wordpress Widget
 Plugin URI: http://www.pgogy.com/code/githubwordpress
 Description: A widget for displaying github profiles
-Version: 0.92
+Version: 0.93
 Author: Pgogy
 Author URI: http://www.pgogy.com
 License: GPL2
@@ -39,21 +39,21 @@ class githubwordpress extends WP_Widget {
 		$ch = curl_init();
 		
 		$user = $instance['username'];
-		$password = $instance['password'];
 		
-		$url = "http://github.com/api/v2/xml/repos/show/" . $user;
+		$url = "https://api.github.com/users/" . $user . "/repos";
 	
 		// set URL and other appropriate options
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array($user . ":" . $password));
-		
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		//curl_setopt($ch, CURLOPT_HTTPHEADER, array($user . ":" . $password));
 		
 		// grab URL and pass it to the browser
 		$data = curl_exec($ch);
-		
-		$xml = new SimpleXMLElement($data);
+	
+		$json = json_decode($data);
 	
 		?><h3 class="widget-title">GitHub</h3>
 			<div style="padding:0px; margin:0px;">
@@ -84,32 +84,35 @@ class githubwordpress extends WP_Widget {
 			<ul id="githublist" style="text-align:left; display:none">
 			<?PHP	
 				
-		foreach($xml->repository as $repo){
+		foreach($json as $repo){
 		
 			echo "<li><a target=\"_blank\" href=\"http://www.github.com/$user/$repo->name\">$repo->name</a><br />";
-			$url = "http://github.com/api/v2/xml/repos/show/" . $user . "/" . $repo->name . "/contributors";
+			$url = "https://api.github.com/repos/" . $user . "/" . $repo->name . "/commits";
+			
+			https://api.github.com/repos/patlockley/openattribute-firefox/commits
+			
+			
 			curl_setopt($ch, CURLOPT_URL, $url);
 			$repo_data = curl_exec($ch);
 			
-			$repo_xml = new SimpleXMLElement($repo_data);
+			$repo = json_decode($repo_data);
 	
 			$total = 0;
 			$counter = 0;
 			
-			foreach($repo_xml->contributor as $coder){
+			foreach($repo as $coder){
 			
-				$total += $coder->contributions;
+				$total++;
 				
-				if($coder->login==$user){
+				if($coder->committer->login==$user){
 			
-					echo $coder->contributions . " contributions <br />";
-					$counter = $coder->contributions;
+					$counter++;
 					
 				}	
 			
 			}	
 			
-			echo (int)(($counter/$total)*100) . " percent of total <br />Languages $repo->language</li>";
+			echo (int)(($counter/$total)*100) . " percent of commits</li>";
 		
 		}
 		
