@@ -3,13 +3,16 @@ Contributors: pgogy, mhutchin
 Tags: github, repository, git
 Requires at least: 3.0.0
 Tested up to: 3.4
-Stable tag: 0.93
+Stable tag: 0.94
 
 Allows a user to add a widget to show their Github repositories on their site.
 
 == Description ==
 Allows a user to add a widget to show their Github repositories on their site. Based around the main Github site and its API
 
+Plugin displays a list of repositories the user has on the site, as well as the percentage of commits to the project.
+
+With thanks to Tobier https://github.com/tobier for bug fixes in the new version
 
 == Installation ==
 
@@ -22,6 +25,9 @@ e.g.
 3. Visit the settings page for the plugin - No other configuration is required.
 
 == Changelog ==
+
+= 0.94 =
+Bug fixes for the harvester and password removed
 
 = 0.92 =
 * Bug fix (forced refresh to ensure old bug removed)
