@@ -111,7 +111,7 @@ class githubwordpress extends WP_Widget {
 		
 		curl_close($ch);
 				
-		echo "</ul>";
+		echo "</ul></div>";
 		
 	}
 	
