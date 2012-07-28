@@ -3,7 +3,7 @@
 Plugin Name: Github Wordpress Widget
 Plugin URI: http://www.pgogy.com/code/githubwordpress
 Description: A widget for displaying github profiles
-Version: 0.94
+Version: 0.95
 Author: Pgogy
 Author URI: http://www.pgogy.com
 License: GPL2
@@ -26,14 +26,52 @@ class githubwordpress extends WP_Widget {
 	}
 
 	function widget($args, $instance) {
-		extract($args);	
 		
-		$data = explode("</li>",$before_widget);			
-		
-		echo $data[0];
-		
+		if ( isset($instance['error']) && $instance['error'] )
+			return;
+
 		// create a new cURL resource
 		$ch = curl_init();
+		
+		if(isset($args['before_title'])){
+		
+			$before_title = $args['before_title'];
+		
+		}else{
+		
+			$before_title = '<h3 class="widget-title">';
+		
+		}
+		
+		if(isset($args['after_title'])){
+		
+			$after_title = $args['after_title'];
+		
+		}else{
+		
+			$after_title = '</h3>';
+		
+		}
+		
+		if(isset($args['before_widget'])){
+		
+			$before_widget = $args['before_widget'];
+		
+		}else{
+		
+			$before_widget = '';
+		
+		}
+		
+		if(isset($args['after_widget'])){
+		
+			$after_widget = $args['after_widget'];
+		
+		}else{
+		
+			$after_widget = '';
+		
+		}
 		
 		$user = $instance['username'];
 		
@@ -51,8 +89,11 @@ class githubwordpress extends WP_Widget {
 	
 		$json = json_decode($data);
 	
-		?><h3 class="widget-title">GitHub</h3>
-			<div style="padding:0px; margin:0px;">
+		echo $before_widget;
+		echo $before_title;
+	
+		?>GitHub<?PHP echo $after_title; ?>
+			<div class="github_wordpress_image_holder">
 			<!-- octocat picture block open -->
 			  <img src="<?PHP
 				
@@ -72,12 +113,12 @@ class githubwordpress extends WP_Widget {
 				
 			?></a> @ <a target="_blank" href="https://www.github.com">Github</a>
 				
-			<div style="padding-bottom: 20px;">	
+			<p>	
 			<!-- expand block open -->
-				<a style="cursor:hand; cursor:pointer" onclick="javascript:if(document.getElementById('githublist').style.display!='block'){document.getElementById('githublist').style.display='block';document.getElementById('githubrepshow').innerHTML = 'Hide my repositories';}else{document.getElementById('githublist').style.display='none';document.getElementById('githubrepshow').innerHTML = 'Show my repositories'};">Show my repositories</a>
+				<a id="githubrepshow" onclick="javascript:github_wordpress_toggle();">Show my repositories</a>
             <!-- expand block closes -->
-			</div>
-			<ul id="githublist" style="text-align:left; display:none">
+			</p>
+			<ul id="githublist">
 			<?PHP	
 				
 		foreach($json as $repo){
@@ -111,7 +152,9 @@ class githubwordpress extends WP_Widget {
 		
 		curl_close($ch);
 				
-		echo "</ul></div>";
+		echo "</ul>";
+		
+		echo $after_widget;
 		
 	}
 	
@@ -124,5 +167,14 @@ class githubwordpress extends WP_Widget {
 } 
 
 add_action('widgets_init', create_function('', 'return register_widget("githubwordpress");'));
+
+add_action("wp_head","github_add_scripts");		
+	
+function github_add_scripts(){
+	
+	?><link rel="stylesheet" href="<?PHP echo plugins_url("/css/github_wordpress_widget.css" , __FILE__ ); ?>" />
+	<script type="text/javascript" language="javascript" src="<?PHP echo plugins_url("/js/github_wordpress_widget.js" , __FILE__ ); ?>"></script><?PHP
+	
+}
 
 ?>
