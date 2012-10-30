@@ -118,7 +118,7 @@ class githubwordpress extends WP_Widget {
 				<a id="githubrepshow" onclick="javascript:github_wordpress_toggle();">Show my repositories</a>
             <!-- expand block closes -->
 			</p>
-			<ul id="githublist">
+			<ul id="githublist" style="display: none;">
 			<?PHP	
 				
 		foreach($json as $repo){
