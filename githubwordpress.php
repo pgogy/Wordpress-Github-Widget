@@ -82,14 +82,14 @@ class githubwordpress extends WP_Widget {
 			<div class="github_wordpress_image_holder"><img src="<?= plugins_url('/octocat_small.png', __FILE__); ?>" /></div>
 
 			<a target="_blank" href="https://www.github.com/<?= $user; ?>"><?= $user; ?></a> @ <a target="_blank" href="https://www.github.com">Github</a>
-			<p><a id="githubrepshow" onclick="javascript:jQuery(\'#githublistdiv\').slideToggle(\'slow\');">
+			<p><a id="githubrepshow" onclick="javascript:jQuery('#githublistdiv').slideToggle('slow');">
 
 			<?php if ($instance['hidden'] == "0") {
 				echo 'Hide my repositories</a></p>';
-				echo '<ul id="githublist">';
+				echo '<div id="githublistdiv"><ul id="githublist">';
 			} else {
 				echo 'Show my repositories</a></p>';
-				echo '<ul id="githublist" style="display: none;">';
+				echo '<div id="githublistdiv"><ul id="githublist" style="display: none;">';
 			}
 
 			foreach($json as $repo) {
@@ -119,7 +119,7 @@ class githubwordpress extends WP_Widget {
 			}
 
 		curl_close($ch);
-		echo "</ul>";
+		echo "</ul></div>";
 		echo $after_widget;
 	}
 	
