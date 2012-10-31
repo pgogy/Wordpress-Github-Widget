@@ -82,7 +82,7 @@ class githubwordpress extends WP_Widget {
 			<div class="github_wordpress_image_holder"><img src="<?= plugins_url('/octocat_small.png', __FILE__); ?>" /></div>
 
 			<a target="_blank" href="https://www.github.com/<?= $user; ?>"><?= $user; ?></a> @ <a target="_blank" href="https://www.github.com">Github</a>
-			<p><a id="githubrepshow" onclick="javascript:jQuery('#githublistdiv').slideToggle('slow');">
+			<p><a id="githubrepshow" onclick="javascript:github_wordpress_toggle();">
 
 			<?php if ($instance['hidden'] == "0") {
 				echo 'Hide my repositories</a></p>';
