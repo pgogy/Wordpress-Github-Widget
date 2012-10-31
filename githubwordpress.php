@@ -93,10 +93,15 @@ class githubwordpress extends WP_Widget {
 			}
 
 			foreach($json as $repo) {
-				echo "<li><a target=\"_blank\" href=\"http://www.github.com/$user/$repo->name\">$repo->name</a><br />";
+				if (isset($json->message)) {
+                                        echo 'GitHub API Error: ' . $json->message;
+                                        break;
+                                }
+
+				echo '<li><a target="_blank" href="http://www.github.com/user/' . $repo->name . '">' . $repo->name . '</a><br />';
 
 				$url = "https://api.github.com/repos/" . $user . "/" . $repo->name . "/commits";
-				$repo_data = curl_exec($ch);
+				$repo_data = curl_exec($ch) or echo 'Error while fetching user stats!';
 				$repo = json_decode($repo_data);
 				$total = 0;
 				$counter = 0;
@@ -105,11 +110,12 @@ class githubwordpress extends WP_Widget {
 
 				foreach($repo as $coder) {
 					$total++;
-					if($coder->committer->login==$user)
+					if($coder->committer->login == $user)
 						$counter++;
 				}
 
 				echo (int) (($counter / $total) * 100) . " percent of commits</li>";
+				unset($coder);
 			}
 
 		curl_close($ch);
