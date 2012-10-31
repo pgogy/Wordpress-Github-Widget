@@ -82,7 +82,7 @@ class githubwordpress extends WP_Widget {
 			<a target="_blank" href="https://www.github.com/<?= $user; ?>"><?= $user; ?></a> @ <a target="_blank" href="https://www.github.com">Github</a>
 
 			<!-- expand block -->
-			<p><a id="githubrepshow" onclick="javascript:void();">Show my repositories</a></p>
+			<p><a id="githubrepshow" onclick="javascript:github_wordpress_toggle();">Show my repositories</a></p>
 
 			<?php if ($instance['hidden'] == "1")
 				echo '<ul id="githublist" style="display: none;">';
