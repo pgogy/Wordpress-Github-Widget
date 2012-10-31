@@ -101,7 +101,7 @@ class githubwordpress extends WP_Widget {
 				echo '<li><a target="_blank" href="http://www.github.com/user/' . $repo->name . '">' . $repo->name . '</a><br />';
 
 				$url = "https://api.github.com/repos/" . $user . "/" . $repo->name . "/commits";
-				$repo_data = curl_exec($ch) or echo 'Error while fetching user stats!';
+				$repo_data = curl_exec($ch);
 				$repo = json_decode($repo_data);
 				$total = 0;
 				$counter = 0;
