@@ -22,13 +22,15 @@ class githubwordpress extends WP_Widget {
 		echo 'id="' . $this->get_field_id("username") . '" value="' . $instance["username"] . '" /></p>';
 		echo '<p><label for="' . $this->get_field_id("hidden") . '">Repo list is hidden by default:</label>';
 		echo '<select id="' . $this->get_field_id("hidden") . '" name="' . $this->get_field_name("hidden") . '">';
+
 		if ($instance['hidden'] == "0") {
-			echo '<option value="0" default="">No</option>';
+			echo '<option value="0" default="default">No</option>';
 			echo '<option value="1">Yes</option>';
 		} else {
 			echo '<option value="0">No</option>';
-			echo '<option value="1" default="">Yes</option>';
+			echo '<option value="1" default="default">Yes</option>';
 		}
+
 		echo '</select>';
 		echo '</div>';
 	}
