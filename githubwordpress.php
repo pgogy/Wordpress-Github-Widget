@@ -84,12 +84,12 @@ class githubwordpress extends WP_Widget {
 			<a target="_blank" href="https://www.github.com/<?= $user; ?>"><?= $user; ?></a> @ <a target="_blank" href="https://www.github.com">Github</a>
 
 
-			<?php if ($instance['hidden'] == "1") {
-				echo '<p><a id="githubrepshow" onclick="javascript:github_wordpress_toggle();">Show my repositories</a></p>';
-				echo '<ul id="githublist" style="display: none;">';
-			} else {
+			<?php if ($instance['hidden'] == "0") {
 				echo '<p><a id="githubrepshow" onclick="javascript:github_wordpress_toggle();">Hide my repositories</a></p>';
 				echo '<ul id="githublist">';
+			} else {
+				echo '<p><a id="githubrepshow" onclick="javascript:github_wordpress_toggle();">Show my repositories</a></p>';
+				echo '<ul id="githublist" style="display: none;">';
 			}
 
 			foreach($json as $repo) {
@@ -119,7 +119,8 @@ class githubwordpress extends WP_Widget {
 	
 	function update($new_instance, $old_instance) {
 		$instance = $old_instance;		
-		$instance['username'] = strip_tags( $new_instance['username'] );
+		$instance['username'] = strip_tags($new_instance['username']);
+		$instance['hidden'] = strip_tags($new_instance['hidden']);
 		return $instance;
 	}		
 	
