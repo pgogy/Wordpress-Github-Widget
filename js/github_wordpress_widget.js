@@ -1,9 +1,8 @@
 function github_wordpress_toggle(){
-	if(document.getElementById('githublist').style.display == 'none') {
+	if (jQuery("#githublistdiv").is(":hidden")) {
 		document.getElementById('githubrepshow').innerHTML = 'Hide my repositories';
-		document.getElementById('githublist').style.display = 'block';
 	} else {
 		document.getElementById('githubrepshow').innerHTML = 'Show my repositories';
-		document.getElementById('githublist').style.display = 'none';
 	}
+	jQuery('#githublistdiv').slideToggle('slow');
 }

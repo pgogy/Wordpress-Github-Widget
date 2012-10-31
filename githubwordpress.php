@@ -82,18 +82,23 @@ class githubwordpress extends WP_Widget {
 			<div class="github_wordpress_image_holder"><img src="<?= plugins_url('/octocat_small.png', __FILE__); ?>" /></div>
 
 			<a target="_blank" href="https://www.github.com/<?= $user; ?>"><?= $user; ?></a> @ <a target="_blank" href="https://www.github.com">Github</a>
-
+			<p><a id="githubrepshow" onclick="javascript:github_wordpress_toggle();">
 
 			<?php if ($instance['hidden'] == "0") {
-				echo '<p><a id="githubrepshow" onclick="javascript:github_wordpress_toggle();">Hide my repositories</a></p>';
-				echo '<ul id="githublist">';
+				echo 'Hide my repositories</a></p>';
+				echo '<div id="githublistdiv"><ul id="githublist">';
 			} else {
-				echo '<p><a id="githubrepshow" onclick="javascript:github_wordpress_toggle();">Show my repositories</a></p>';
-				echo '<ul id="githublist" style="display: none;">';
+				echo 'Show my repositories</a></p>';
+				echo '<div id="githublistdiv"><ul id="githublist" style="display: none;">';
 			}
 
 			foreach($json as $repo) {
-				echo "<li><a target=\"_blank\" href=\"http://www.github.com/$user/$repo->name\">$repo->name</a><br />";
+				if (isset($json->message)) {
+                                        echo 'GitHub API Error: ' . $json->message;
+                                        break;
+                                }
+
+				echo '<li><a target="_blank" href="http://www.github.com/user/' . $repo->name . '">' . $repo->name . '</a><br />';
 
 				$url = "https://api.github.com/repos/" . $user . "/" . $repo->name . "/commits";
 				$repo_data = curl_exec($ch);
@@ -105,15 +110,16 @@ class githubwordpress extends WP_Widget {
 
 				foreach($repo as $coder) {
 					$total++;
-					if($coder->committer->login==$user)
+					if($coder->committer->login == $user)
 						$counter++;
 				}
 
 				echo (int) (($counter / $total) * 100) . " percent of commits</li>";
+				unset($coder);
 			}
 
 		curl_close($ch);
-		echo "</ul>";
+		echo "</ul></div>";
 		echo $after_widget;
 	}
 	
@@ -132,5 +138,6 @@ add_action("wp_head","github_add_scripts");
 function github_add_scripts() {
 	echo '<link rel="stylesheet" href="' . plugins_url("/css/github_wordpress_widget.css", __FILE__ ) . '" />';
 	echo '<script type="text/javascript" language="javascript" src="' . plugins_url("/js/github_wordpress_widget.js", __FILE__ ) . '"></script>';
+	echo '<script src="http://code.jquery.com/jquery-latest.js"></script>';
 }
 ?>
