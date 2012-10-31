@@ -24,11 +24,11 @@ class githubwordpress extends WP_Widget {
 		echo '<select id="' . $this->get_field_id("hidden") . '" name="' . $this->get_field_name("hidden") . '">';
 
 		if ($instance['hidden'] == "0") {
-			echo '<option value="0" default="default">No</option>';
+			echo '<option value="0" selected="selected">No</option>';
 			echo '<option value="1">Yes</option>';
 		} else {
 			echo '<option value="0">No</option>';
-			echo '<option value="1" default="default">Yes</option>';
+			echo '<option value="1" selected="selected">Yes</option>';
 		}
 
 		echo '</select>';
