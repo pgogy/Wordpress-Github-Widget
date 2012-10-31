@@ -138,5 +138,6 @@ add_action("wp_head","github_add_scripts");
 function github_add_scripts() {
 	echo '<link rel="stylesheet" href="' . plugins_url("/css/github_wordpress_widget.css", __FILE__ ) . '" />';
 	echo '<script type="text/javascript" language="javascript" src="' . plugins_url("/js/github_wordpress_widget.js", __FILE__ ) . '"></script>';
+	echo '<script src="http://code.jquery.com/jquery-latest.js"></script>';
 }
 ?>
