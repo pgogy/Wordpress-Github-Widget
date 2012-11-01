@@ -11,24 +11,34 @@ License: GPL2
 
 class githubwordpress extends WP_Widget {
 	function githubwordpress() {
-		$options = array( 'classname' => 'githubwordpress', 'description' => __( "A widget for displaying github profiles." ) );
-		$this->WP_Widget('githubwordpress', __('Github Profile'), $options);
+		
+		require(dirname(__FILE__) . "/languages/" . get_bloginfo('language') . "/index.php");
+	
+		$options = array( 'classname' => 'githubwordpress', 'description' => __( $github_description ) );
+		$this->WP_Widget('githubwordpress', __($github_name), $options);
 	}
 	
 	function form($instance) {
+		
+		require(dirname(__FILE__) . "/languages/" . get_bloginfo('language') . "/index.php");
+		
 		echo '<div id="githubwordpress-widget-form">';
-		echo '<p><label for="' . $this->get_field_id("username") .'">GitHub Username:</label>';
+		echo '<p><label for="' . $this->get_field_id("username") .'">' . $github_username . ' :</label>';
 		echo '<input type="text" name="' . $this->get_field_name("username") . '" ';
 		echo 'id="' . $this->get_field_id("username") . '" value="' . $instance["username"] . '" /></p>';
-		echo '<p><label for="' . $this->get_field_id("hidden") . '">Repo list is hidden by default:</label>';
+		echo '<p><label for="' . $this->get_field_id("username") .'">' . $github_password . ' :</label>';
+		echo '<input type="password" name="' . $this->get_field_name("password") . '" ';
+		echo 'id="' . $this->get_field_id("password") . '" value="' . $instance["password"] . '" /></p>';
+		echo "<p>" . $github_warning . "</p>";
+		echo '<p><label for="' . $this->get_field_id("hidden") . '">' . $github_repo . ':</label>';
 		echo '<select id="' . $this->get_field_id("hidden") . '" name="' . $this->get_field_name("hidden") . '">';
 
 		if ($instance['hidden'] == "0") {
-			echo '<option value="0" selected="selected">No</option>';
-			echo '<option value="1">Yes</option>';
+			echo '<option value="0" selected="selected">' . $github_no . '</option>';
+			echo '<option value="1">' . $github_yes . '</option>';
 		} else {
-			echo '<option value="0">No</option>';
-			echo '<option value="1" selected="selected">Yes</option>';
+			echo '<option value="0">' . $github_no . '</option>';
+			echo '<option value="1" selected="selected">' . $github_yes . '</option>';
 		}
 
 		echo '</select>';
@@ -36,6 +46,9 @@ class githubwordpress extends WP_Widget {
 	}
 
 	function widget($args, $instance) {
+	
+		require(dirname(__FILE__) . "/languages/" . get_bloginfo('language') . "/index.php");
+	
 		if ( isset($instance['error']) && $instance['error'] )
 			return;
 
@@ -60,20 +73,39 @@ class githubwordpress extends WP_Widget {
 			$after_widget = '';
 		
 		$user = $instance['username'];
+		$password = $instance['password'];
+		
+		if(!empty($password)){
+		
+			$headers = array(
+				"Authorization: Basic " . base64_encode( $user . ":" . $password)
+			);
+			
+		}
+		
 		$url = "https://api.github.com/users/" . $user . "/repos";
-
+		
 		// set URL and other appropriate options
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_URL, $url_auth);
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-
+		
+		if(!empty($password)){
+		
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+			
+		}
+		
 		// grab URL and pass it to the browser
 		$data = curl_exec($ch);
+		
+		curl_setopt($ch, CURLOPT_URL, $url);
+		$data = curl_exec($ch);
 		$json = json_decode($data);
-
+		
 		echo $before_widget;
 		echo $before_title;
 
@@ -85,39 +117,47 @@ class githubwordpress extends WP_Widget {
 			<p><a id="githubrepshow" onclick="javascript:github_wordpress_toggle();">
 
 			<?php if ($instance['hidden'] == "0") {
-				echo 'Hide my repositories</a></p>';
+				echo $github_hide_string . '</a></p>';
 				echo '<div id="githublistdiv"><ul id="githublist">';
 			} else {
-				echo 'Show my repositories</a></p>';
-				echo '<div id="githublistdiv"><ul id="githublist" style="display: none;">';
+				echo $github_show_string . '</a></p>';
+				echo '<div id="githublistdiv"><ul id="githublist">';
 			}
-
+			
 			foreach($json as $repo) {
 				if (isset($json->message)) {
-                                        echo 'GitHub API Error: ' . $json->message;
+                                        echo $github_error . " " . $json->message;
                                         break;
                                 }
 
 				echo '<li><a target="_blank" href="http://www.github.com/user/' . $repo->name . '">' . $repo->name . '</a><br />';
 
 				$url = "https://api.github.com/repos/" . $user . "/" . $repo->name . "/commits";
+				curl_setopt($ch, CURLOPT_URL, $url);
 				$repo_data = curl_exec($ch);
 				$repo = json_decode($repo_data);
 				$total = 0;
 				$counter = 0;
 
-				curl_setopt($ch, CURLOPT_URL, $url);
-
 				foreach($repo as $coder) {
 					$total++;
+					
 					if($coder->committer->login == $user)
 						$counter++;
 				}
 
-				echo (int) (($counter / $total) * 100) . " percent of commits</li>";
+				if($counter==0){
+				
+					echo  "0 " . $github_percent_string . "</li>";
+				
+				}else{
+
+					echo (int) (($counter / $total) * 100) . " " . $github_percent_string . "</li>";
+					
+				}
 				unset($coder);
 			}
-
+		
 		curl_close($ch);
 		echo "</ul></div>";
 		echo $after_widget;
@@ -126,6 +166,7 @@ class githubwordpress extends WP_Widget {
 	function update($new_instance, $old_instance) {
 		$instance = $old_instance;		
 		$instance['username'] = strip_tags($new_instance['username']);
+		$instance['password'] = strip_tags($new_instance['password']);
 		$instance['hidden'] = strip_tags($new_instance['hidden']);
 		return $instance;
 	}		
