@@ -87,7 +87,6 @@ class githubwordpress extends WP_Widget {
 		
 		// set URL and other appropriate options
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url_auth);
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
@@ -121,7 +120,7 @@ class githubwordpress extends WP_Widget {
 				echo '<div id="githublistdiv"><ul id="githublist">';
 			} else {
 				echo $github_show_string . '</a></p>';
-				echo '<div id="githublistdiv"><ul id="githublist">';
+				echo '<div id="githublistdiv" style="display:none"><ul id="githublist">';
 			}
 			
 			foreach($json as $repo) {

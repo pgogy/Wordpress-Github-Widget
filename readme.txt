@@ -28,6 +28,8 @@ e.g.
 
 = 0.95 =
 Moved CSS and JS out, used $args properly
+Added internationalisation
+Returned password option for rate limiting
 
 = 0.94 =
 Bug fixes for the harvester and password removed
