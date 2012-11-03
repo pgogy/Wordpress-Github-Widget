@@ -3,7 +3,7 @@ Contributors: pgogy, mhutchin
 Tags: github, repository, git
 Requires at least: 3.0.0
 Tested up to: 3.4
-Stable tag: 0.95
+Stable tag: 0.96
 
 Allows a user to add a widget to show their Github repositories on their site.
 
@@ -26,7 +26,7 @@ e.g.
 
 == Changelog ==
 
-= 0.95 =
+= 0.96 =
 Moved CSS and JS out, used $args properly
 Added internationalisation
 Returned password option for rate limiting
