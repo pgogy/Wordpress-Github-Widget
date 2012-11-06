@@ -111,6 +111,16 @@ class githubwordpress extends WP_Widget {
 		?>GitHub<?= $after_title; ?>
 			<!-- octocat picture -->
 			<div class="github_wordpress_image_holder"><img src="<?= plugins_url('/octocat_small.png', __FILE__); ?>" /></div>
+			<script type="text/javascript">
+				function github_wordpress_toggle(){
+					if (jQuery("#githublistdiv").is(":hidden")) {
+						document.getElementById('githubrepshow').innerHTML = '<?= $github_hide_string ?>';
+					} else {
+						document.getElementById('githubrepshow').innerHTML = '<?= $github_show_string ?>';
+					}
+					jQuery('#githublistdiv').slideToggle('slow');
+				}
+			</script>
 
 			<a target="_blank" href="https://www.github.com/<?= $user; ?>"><?= $user; ?></a> @ <a target="_blank" href="https://www.github.com">Github</a>
 			<p><a id="githubrepshow" onclick="javascript:github_wordpress_toggle();">
@@ -177,7 +187,6 @@ add_action("wp_head","github_add_scripts");
 	
 function github_add_scripts() {
 	echo '<link rel="stylesheet" href="' . plugins_url("/css/github_wordpress_widget.css", __FILE__ ) . '" />';
-	echo '<script type="text/javascript" language="javascript" src="' . plugins_url("/js/github_wordpress_widget.js", __FILE__ ) . '"></script>';
 	echo '<script src="http://code.jquery.com/jquery-latest.js"></script>';
 }
 ?>
