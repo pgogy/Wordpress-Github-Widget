@@ -139,7 +139,7 @@ class githubwordpress extends WP_Widget {
                                         break;
                                 }
 
-				echo '<li><a target="_blank" href="http://www.github.com/repos/' . $user . '/' . $repo->name . '">' . $repo->name . '</a><br />';
+				echo '<li><a target="_blank" href="http://www.github.com/' . $user . '/' . $repo->name . '">' . $repo->name . '</a><br />';
 
 				$url = "https://api.github.com/repos/" . $user . "/" . $repo->name . "/commits";
 				curl_setopt($ch, CURLOPT_URL, $url);
