@@ -3,7 +3,7 @@
 Plugin Name: Github Wordpress Widget
 Plugin URI: http://www.pgogy.com/code/githubwordpress
 Description: A widget for displaying github profiles
-Version: 0.96
+Version: 0.97
 Author: Pgogy
 Author URI: http://www.pgogy.com
 License: GPL2
@@ -20,7 +20,15 @@ class githubwordpress extends WP_Widget {
 	
 	function form($instance) {
 		
-		require(dirname(__FILE__) . "/languages/" . get_bloginfo('language') . "/index.php");
+		if(file_exists(dirname(__FILE__) . "/languages/" . get_bloginfo('language') . "/index.php")){
+		
+			require(dirname(__FILE__) . "/languages/" . get_bloginfo('language') . "/index.php");
+			
+		}else{
+		
+			require(dirname(__FILE__) . "/languages/en-US/index.php");
+		
+		}
 		
 		echo '<div id="githubwordpress-widget-form">';
 		echo '<p><label for="' . $this->get_field_id("username") .'">' . $github_username . ' :</label>';
