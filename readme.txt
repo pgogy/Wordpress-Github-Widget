@@ -2,8 +2,8 @@
 Contributors: pgogy, mhutchin
 Tags: github, repository, git
 Requires at least: 3.0.0
-Tested up to: 3.4
-Stable tag: 0.97
+Tested up to: 3.5
+Stable tag: 0.98
 
 Allows a user to add a widget to show their Github repositories on their site.
 
@@ -15,6 +15,10 @@ Plugin displays a list of repositories the user has on the site, as well as the 
 With thanks to Tobier https://github.com/tobier for bug fixes in the new version
 
 and thanks to ttouch https://github.com/ttouch for the Greek translation
+
+Please see http://www.pgogy.com and http://www.pgogy.com/code/groups/wordpress/github-wordpress-widget/ for support
+
+[vimeo https://vimeo.com/60035852]
 
 == Installation ==
 
