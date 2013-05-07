@@ -95,10 +95,12 @@ class githubwordpress extends WP_Widget {
 		
 		// set URL and other appropriate options
 		$ch = curl_init();
+		$vers = curl_version();
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_USERAGENT, 'curl/' . $vers['version'] );
 		
 		if(!empty($password)){
 		
