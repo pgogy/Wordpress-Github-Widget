@@ -2,7 +2,7 @@
 /*
 Plugin Name: Github Wordpress Widget
 Description: A widget for displaying github profiles
-Version: 1.0
+Version: 1.1
 Author: Pgogy
 Author URI: http://www.pgogy.com
 License: GPL2
@@ -30,6 +30,9 @@ class githubwordpress extends WP_Widget {
 		}
 		
 		echo '<div id="githubwordpress-widget-form">';
+		echo '<p><label for="' . $this->get_field_id("title") .'">' . __("Title") . ' :</label>';
+		echo '<input type="text" name="' . $this->get_field_name("title") . '" ';
+		echo 'id="' . $this->get_field_id("username") . '" value="' . $instance["title"] . '" /></p>';
 		echo '<p><label for="' . $this->get_field_id("username") .'">' . $github_username . ' :</label>';
 		echo '<input type="text" name="' . $this->get_field_name("username") . '" ';
 		echo 'id="' . $this->get_field_id("username") . '" value="' . $instance["username"] . '" /></p>';
@@ -116,8 +119,9 @@ class githubwordpress extends WP_Widget {
 		
 		echo $before_widget;
 		echo $before_title;
-
-		?>GitHub<?= $after_title; ?>
+		echo $instance['title'];
+		echo $after_title; 
+		?>
 			<!-- octocat picture -->
 			<div class="github_wordpress_image_holder"><img src="<?= plugins_url('/octocat_small.png', __FILE__); ?>" /></div>
 			<script type="text/javascript">
@@ -183,6 +187,7 @@ class githubwordpress extends WP_Widget {
 	
 	function update($new_instance, $old_instance) {
 		$instance = $old_instance;		
+		$instance['title'] = strip_tags($new_instance['title']);
 		$instance['username'] = strip_tags($new_instance['username']);
 		$instance['password'] = strip_tags($new_instance['password']);
 		$instance['hidden'] = strip_tags($new_instance['hidden']);

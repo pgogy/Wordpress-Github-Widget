@@ -2,8 +2,8 @@
 Contributors: pgogy, mhutchin
 Tags: github, repository, git
 Requires at least: 3.0.0
-Tested up to: 3.5
-Stable tag: 1.0
+Tested up to: 4.2
+Stable tag: 1.1
 
 Allows a user to add a widget to show their Github repositories on their site.
 
