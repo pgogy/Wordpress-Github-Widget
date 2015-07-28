@@ -8,6 +8,7 @@ a#githubrepshow{
 	cursor:pointer
 }
 
-ul#gitbublist{
+ul#githublist{
 	text-align:left;
+	list-style: none;
 }

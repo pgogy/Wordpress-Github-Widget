@@ -1,9 +1,8 @@
 <?php
 /*
 Plugin Name: Github Wordpress Widget
-Plugin URI: http://www.pgogy.com/code/groups/wordpress/github-wordpress-widget/
 Description: A widget for displaying github profiles
-Version: 0.98
+Version: 1.0
 Author: Pgogy
 Author URI: http://www.pgogy.com
 License: GPL2
@@ -193,10 +192,10 @@ class githubwordpress extends WP_Widget {
 }
 
 add_action('widgets_init', create_function('', 'return register_widget("githubwordpress");'));
-add_action("wp_head","github_add_scripts");
 	
-function github_add_scripts() {
-	echo '<link rel="stylesheet" href="' . plugins_url("/css/github_wordpress_widget.css", __FILE__ ) . '" />';
-	echo '<script src="http://code.jquery.com/jquery-latest.js"></script>';
+function themeslug_enqueue_style() {
+	wp_enqueue_style( 'github-profile-display', plugins_url("/css/github_wordpress_widget.css", __FILE__ ), false ); 
+	wp_enqueue_script( 'jquery' );
 }
-?>
+
+add_action( 'wp_enqueue_scripts', 'themeslug_enqueue_style' );	
