@@ -2,7 +2,7 @@
 /*
 Plugin Name: Github Wordpress Widget
 Description: A widget for displaying github profiles
-Version: 1.1
+Version: 1.2
 Author: Pgogy
 Author URI: http://www.pgogy.com
 License: GPL2
@@ -27,6 +27,18 @@ class githubwordpress extends WP_Widget {
 		
 			require(dirname(__FILE__) . "/languages/en-US/index.php");
 		
+		}
+		
+		if(!isset($instance["title"])){
+			$instance["title"] = "";
+		}
+		
+		if(!isset($instance["username"])){
+			$instance["username"] = "";
+		}
+		
+		if(!isset($instance["password"])){
+			$instance["password"] = "";
 		}
 		
 		echo '<div id="githubwordpress-widget-form">';
